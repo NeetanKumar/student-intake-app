@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: Student Intake Application API
+  description: API for submitting and retrieving university admissions student intake records.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:3000/api
+    description: Local development
+paths:
+  /intakes:
+    post:
+      summary: Create a new student intake submission
+      description: >
+        Creates a Student record along with its related AcademicInterest (and courses)
+        and WorkPreference (and work areas) in a single transaction.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IntakeSubmissionInput"
+            example:
+              basicInfo:
+                firstName: "Jordan"
+                lastName: "Rivera"
+                email: "jordan.rivera@example.com"
+                phoneNumber: "555-123-4567"
+                dateOfBirth: "2005-05-15"
+                mailingAddressLine1: "123 Main St"
+                mailingAddressLine2: null
+                city: "Springfield"
+                state: "IL"
+                postalCode: "62704"
+                country: "United States"
+              academicInterests:
+                degreeLevel: "BACHELORS"
+                major: "Computer Science"
+                minor: "Mathematics"
+                courses: ["Data Structures & Algorithms", "Linear Algebra"]
+              workPreferences:
+                workAreas: ["Software Engineering"]
+                employmentType: "FULL_TIME"
+                locationType: "REMOTE"
+                notes: "Looking forward to it."
+      responses:
+        "201":
+          description: Submission created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentDetail"
+        "400":
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+    get:
+      summary: List student intake submissions
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        "200":
+          description: Paginated list of submissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentListResponse"
+  /intakes/{id}:
+    get:
+      summary: Get a single student intake submission by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Submission detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentDetail"
+        "404":
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    IntakeSubmissionInput:
+      type: object
+      required: [basicInfo, academicInterests, workPreferences]
+      properties:
+        basicInfo:
+          type: object
+          required:
+            [
+              firstName,
+              lastName,
+              email,
+              phoneNumber,
+              dateOfBirth,
+              mailingAddressLine1,
+              city,
+              state,
+              postalCode,
+              country,
+            ]
+          properties:
+            firstName: { type: string }
+            lastName: { type: string }
+            email: { type: string, format: email }
+            phoneNumber: { type: string }
+            dateOfBirth: { type: string, format: date }
+            mailingAddressLine1: { type: string }
+            mailingAddressLine2: { type: string, nullable: true }
+            city: { type: string }
+            state: { type: string }
+            postalCode: { type: string }
+            country: { type: string }
+        academicInterests:
+          type: object
+          required: [degreeLevel, major, courses]
+          properties:
+            degreeLevel:
+              type: string
+              enum: [ASSOCIATE, BACHELORS, MASTERS, DOCTORATE, CERTIFICATE]
+            major: { type: string }
+            minor: { type: string, nullable: true }
+            courses:
+              type: array
+              minItems: 1
+              items: { type: string }
+        workPreferences:
+          type: object
+          required: [workAreas, employmentType, locationType]
+          properties:
+            workAreas:
+              type: array
+              minItems: 1
+              items: { type: string }
+            employmentType:
+              type: string
+              enum: [FULL_TIME, PART_TIME, INTERNSHIP, CO_OP]
+            locationType:
+              type: string
+              enum: [ON_CAMPUS, REMOTE, HYBRID, OFF_CAMPUS]
+            notes: { type: string, nullable: true }
+    StudentListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string, format: uuid }
+              firstName: { type: string }
+              lastName: { type: string }
+              email: { type: string }
+              createdAt: { type: string, format: date-time }
+              academicInterest:
+                type: object
+                nullable: true
+                properties:
+                  degreeLevel: { type: string }
+                  major: { type: string }
+        total: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    StudentDetail:
+      type: object
+      description: Full Student record with nested academicInterest and workPreference.
+      properties:
+        id: { type: string, format: uuid }
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string }
+        phoneNumber: { type: string }
+        dateOfBirth: { type: string, format: date-time }
+        mailingAddressLine1: { type: string }
+        mailingAddressLine2: { type: string, nullable: true }
+        city: { type: string }
+        state: { type: string }
+        postalCode: { type: string }
+        country: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        academicInterest:
+          type: object
+          properties:
+            id: { type: string, format: uuid }
+            degreeLevel: { type: string }
+            major: { type: string }
+            minor: { type: string, nullable: true }
+            courses:
+              type: array
+              items:
+                type: object
+                properties:
+                  id: { type: string, format: uuid }
+                  courseName: { type: string }
+        workPreference:
+          type: object
+          properties:
+            id: { type: string, format: uuid }
+            employmentType: { type: string }
+            locationType: { type: string }
+            notes: { type: string, nullable: true }
+            workAreas:
+              type: array
+              items:
+                type: object
+                properties:
+                  id: { type: string, format: uuid }
+                  workArea: { type: string }
+    ValidationError:
+      type: object
+      properties:
+        error: { type: string }
+        fieldErrors:
+          type: object
+          description: Zod's flattened error shape (formErrors + fieldErrors per top-level key).

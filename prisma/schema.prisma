@@ -1,0 +1,100 @@
+// Prisma schema for the Student Intake Application.
+// See ../README.md for architecture notes and ../docs/API.md for how this maps to the API.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DegreeLevel {
+  ASSOCIATE
+  BACHELORS
+  MASTERS
+  DOCTORATE
+  CERTIFICATE
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+  CO_OP
+}
+
+enum LocationType {
+  ON_CAMPUS
+  REMOTE
+  HYBRID
+  OFF_CAMPUS
+}
+
+model Student {
+  id                  String   @id @default(uuid())
+  firstName           String
+  lastName            String
+  email               String
+  phoneNumber         String
+  dateOfBirth         DateTime
+  mailingAddressLine1 String
+  mailingAddressLine2 String?
+  city                String
+  state               String
+  postalCode          String
+  country             String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  academicInterest AcademicInterest?
+  workPreference   WorkPreference?
+
+  @@map("students")
+}
+
+model AcademicInterest {
+  id          String      @id @default(uuid())
+  studentId   String      @unique
+  student     Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  degreeLevel DegreeLevel
+  major       String
+  minor       String?
+
+  courses CourseOfInterest[]
+
+  @@map("academic_interests")
+}
+
+model CourseOfInterest {
+  id                 String           @id @default(uuid())
+  academicInterestId String
+  academicInterest   AcademicInterest @relation(fields: [academicInterestId], references: [id], onDelete: Cascade)
+  courseName         String
+
+  @@map("courses_of_interest")
+}
+
+model WorkPreference {
+  id             String         @id @default(uuid())
+  studentId      String         @unique
+  student        Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  employmentType EmploymentType
+  locationType   LocationType
+  notes          String?
+
+  workAreas WorkAreaPreference[]
+
+  @@map("work_preferences")
+}
+
+model WorkAreaPreference {
+  id               String         @id @default(uuid())
+  workPreferenceId String
+  workPreference   WorkPreference @relation(fields: [workPreferenceId], references: [id], onDelete: Cascade)
+  workArea         String
+
+  @@map("work_area_preferences")
+}
