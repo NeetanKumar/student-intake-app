@@ -3,7 +3,7 @@
 A full-stack app for a university admissions team. Students complete a
 3-step intake form (basic info → academic interests → work preferences),
 review, and submit. Submissions are stored in a normalized Postgres schema
-and exposed via a REST API, with an admin page to browse them.
+and exposed via a REST API, with an admin dashboard to browse them.
 
 **Stack:** Next.js 16 (App Router, TypeScript) · PostgreSQL + Prisma 6 ·
 Zod + react-hook-form · Tailwind CSS v4.
@@ -16,10 +16,9 @@ Zod + react-hook-form · Tailwind CSS v4.
 docker compose up --build
 ```
 
-Builds the app image, starts Postgres, applies migrations, and seeds 4
-sample submissions on first run (skipped automatically if the database
-already has data — set `SEED_ON_START: "false"` in `docker-compose.yml`
-to disable). Serves the app at
+Builds the app image, starts Postgres, applies migrations, and seeds a
+few sample submissions on first run (skipped automatically once the
+database has data). Serves the app at
 [http://localhost:3000](http://localhost:3000). No local Node install
 needed.
 
@@ -30,16 +29,12 @@ docker compose up -d postgres   # Postgres only, on localhost:5433
 cp .env.example .env
 npm install
 npx prisma migrate dev
-npm run db:seed                 # optional: 4 sample submissions
+npm run db:seed                 # optional: sample submissions
 npm run dev
 ```
 
 - Intake form: [http://localhost:3000/intake/basic-info](http://localhost:3000/intake/basic-info)
 - Admin view: [http://localhost:3000/admin](http://localhost:3000/admin)
-
-Port 5433 (not 5432) is used for the host-mapped Postgres port to avoid
-clashing with a locally-installed Postgres; change it in
-`docker-compose.yml` + `.env` if you don't need to.
 
 ### Other commands
 
@@ -62,7 +57,7 @@ npx prisma studio
 - On submit, `POST /api/intakes` creates the `Student` row plus its
   `AcademicInterest`/`WorkPreference` (and their child rows) in one nested
   Prisma `create` call.
-- `/admin` is a small dashboard; `/admin/enrollments` and
+- `/admin` is a dashboard; `/admin/enrollments` and
   `/admin/enrollments/[id]` read directly from Prisma to list/display
   submissions. The same data is available over the JSON API.
 
@@ -90,27 +85,13 @@ Courses and work areas are child tables (not CSV columns) to keep the
 Full reference with examples: [`docs/API.md`](docs/API.md) · machine-readable
 spec: [`openapi.yaml`](openapi.yaml).
 
-## Assumptions
+## Known limitations
 
-- No authentication — a scoped build, not a system for real student PII.
-- Single admissions cycle; no terms/deadlines/multiple concurrent forms.
-- Work areas and courses are suggested from a fixed list
-  (`src/lib/constants.ts`) but accept free-text custom entries.
-- A submission is only persisted once, on final review-and-submit.
-
-## Trade-offs & what I'd improve with more time
-
-- **No server-side drafts.** Multi-step state lives in `sessionStorage`,
-  not the DB — fine for "don't lose data mid-flow," but a student can't
-  resume from a different device.
-- **No auth on `/admin`.** Would add role-gated auth before shipping this
-  for real.
-- **Admin list has no pagination UI** yet, though the API supports it.
-- **No rate limiting/CAPTCHA** on the public submission endpoint.
-- **Work areas/courses are plain strings**, not reference tables with IDs
-  — simple to extend via a constants file now, but a real system would
-  likely want first-class lookup tables once staff manage the catalog.
+- No authentication — the admin dashboard is open to anyone with the URL.
+- Multi-step form state lives in `sessionStorage`, not the database, so a
+  submission can't be resumed from a different device.
+- No pagination UI on the enrollments list (the API supports it).
+- No rate limiting/CAPTCHA on the public submission endpoint.
+- Work areas and courses are plain strings, suggested from a constants
+  file, rather than managed reference tables.
 - No file uploads, no email confirmation on submission.
-- Tests are intentionally lightweight (Zod schema tests + one API route
-  test with mocked Prisma) given scope; the full flow was verified
-  manually end-to-end with a real browser during development.
