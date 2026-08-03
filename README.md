@@ -85,7 +85,7 @@ Courses and work areas are child tables (not CSV columns) to keep the
 Full reference with examples: [`docs/API.md`](docs/API.md) · machine-readable
 spec: [`openapi.yaml`](openapi.yaml).
 
-## Known limitations
+## What else could be incorporated
 
 - No authentication — the admin dashboard is open to anyone with the URL.
 - Multi-step form state lives in `sessionStorage`, not the database, so a
