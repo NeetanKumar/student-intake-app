@@ -43,7 +43,12 @@ export default function AcademicInterestsPage() {
       <StepperNav currentPath="/intake/academic-interests" />
 
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Academic Interests</h1>
+        <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+          Step 2 of 4
+        </span>
+        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+          Academic Interests
+        </h1>
         <p className="mt-1 text-sm text-slate-600">
           Let us know what you&apos;d like to study.
         </p>

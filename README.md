@@ -24,6 +24,20 @@ browse them.
   the client).
 - **Styling:** Tailwind CSS v4.
 
+## Design
+
+The visual theme takes cues from [nablon.ai](https://nablon.ai): a deep navy
+(`#020617`) surface, an electric-blue accent (`#0A58EB`), bold extra-heavy
+headings, sharp (non-rounded) buttons and inputs, and small uppercase
+tracked "eyebrow" labels (e.g. `STEP 1 OF 4`). The landing page additionally
+has an interactive animated background (`src/components/WaveBackground.tsx`)
+— a `<canvas>` of layered sine-wave lines that drift continuously and bulge
+away from the cursor on hover, similar to Nablon's line-field hero. The
+actual multi-step form surfaces stay on a light background rather than full
+dark mode, since a long form with many text inputs is more legible that way;
+the dark theme is reserved for the landing page and the accent color/shape
+language carries through the rest of the app.
+
 ### Request flow for a submission
 
 1. The 3 step pages (`/intake/basic-info`, `/intake/academic-interests`,

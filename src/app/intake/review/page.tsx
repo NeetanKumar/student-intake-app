@@ -61,7 +61,12 @@ export default function ReviewPage() {
       <StepperNav currentPath="/intake/review" />
 
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Review &amp; Submit</h1>
+        <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+          Step 4 of 4
+        </span>
+        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+          Review &amp; Submit
+        </h1>
         <p className="mt-1 text-sm text-slate-600">
           Please confirm everything below is correct before submitting.
         </p>

@@ -25,19 +25,19 @@ export default async function AdminDetailPage({
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-4 py-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink">
           {student.firstName} {student.lastName}
         </h1>
         <Link
           href="/admin"
-          className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+          className="rounded-none border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
         >
           Back to list
         </Link>
       </div>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="mb-3 text-base font-semibold text-slate-900">Basic Information</h2>
+      <section className="rounded-none border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 className="mb-3 text-base font-semibold text-ink">Basic Information</h2>
         <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
           <Item label="Email" value={student.email} />
           <Item label="Phone" value={student.phoneNumber} />
@@ -56,8 +56,8 @@ export default async function AdminDetailPage({
         </dl>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="mb-3 text-base font-semibold text-slate-900">Academic Interests</h2>
+      <section className="rounded-none border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 className="mb-3 text-base font-semibold text-ink">Academic Interests</h2>
         <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
           <Item label="Degree level" value={degreeLevelLabel(student.academicInterest?.degreeLevel)} />
           <Item label="Major" value={student.academicInterest?.major} />
@@ -69,8 +69,8 @@ export default async function AdminDetailPage({
         </dl>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="mb-3 text-base font-semibold text-slate-900">Work Area Preferences</h2>
+      <section className="rounded-none border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 className="mb-3 text-base font-semibold text-ink">Work Area Preferences</h2>
         <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
           <Item
             label="Preferred work areas"

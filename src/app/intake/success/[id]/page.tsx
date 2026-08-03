@@ -21,7 +21,7 @@ export default async function IntakeSuccessPage({
         </svg>
       </div>
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-slate-900">Application submitted</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink">Application submitted</h1>
         <p className="text-sm text-slate-600">
           Thank you! Your intake submission has been received.
         </p>
@@ -30,13 +30,13 @@ export default async function IntakeSuccessPage({
       <div className="flex gap-3">
         <Link
           href="/"
-          className="rounded-md bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-slate-700"
+          className="rounded-none bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-accent-hover"
         >
           Back to home
         </Link>
         <Link
           href={`/admin/${id}`}
-          className="rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+          className="rounded-none border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
         >
           View submission
         </Link>

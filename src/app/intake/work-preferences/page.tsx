@@ -43,7 +43,12 @@ export default function WorkPreferencesPage() {
       <StepperNav currentPath="/intake/work-preferences" />
 
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Work Area Preferences</h1>
+        <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+          Step 3 of 4
+        </span>
+        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+          Work Area Preferences
+        </h1>
         <p className="mt-1 text-sm text-slate-600">
           Tell us about the kind of work experience you&apos;re looking for.
         </p>
@@ -73,7 +78,7 @@ export default function WorkPreferencesPage() {
                   type="radio"
                   value={type.value}
                   {...register("employmentType")}
-                  className="h-4 w-4 border-slate-300 text-slate-900 focus:ring-slate-500"
+                  className="h-4 w-4 border-slate-300 text-accent focus:ring-accent"
                 />
                 {type.label}
               </label>
@@ -89,7 +94,7 @@ export default function WorkPreferencesPage() {
                   type="radio"
                   value={type.value}
                   {...register("locationType")}
-                  className="h-4 w-4 border-slate-300 text-slate-900 focus:ring-slate-500"
+                  className="h-4 w-4 border-slate-300 text-accent focus:ring-accent"
                 />
                 {type.label}
               </label>

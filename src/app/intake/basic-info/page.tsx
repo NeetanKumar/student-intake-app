@@ -34,7 +34,12 @@ export default function BasicInfoPage() {
       <StepperNav currentPath="/intake/basic-info" />
 
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Basic Information</h1>
+        <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+          Step 1 of 4
+        </span>
+        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+          Basic Information
+        </h1>
         <p className="mt-1 text-sm text-slate-600">
           Tell us a bit about yourself so we can get in touch.
         </p>

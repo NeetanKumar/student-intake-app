@@ -21,27 +21,32 @@ export default async function AdminPage() {
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Submitted Intakes</h1>
+          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+            Admissions
+          </span>
+          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+            Submitted Intakes
+          </h1>
           <p className="mt-1 text-sm text-slate-600">
             {students.length} submission{students.length === 1 ? "" : "s"} on file.
           </p>
         </div>
         <Link
           href="/"
-          className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+          className="rounded-none border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
         >
           Back to home
         </Link>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-none border border-slate-200 bg-white shadow-sm">
         <table className="min-w-full divide-y divide-slate-200 text-sm">
           <thead className="bg-slate-50">
             <tr>
-              <th className="px-4 py-3 text-left font-medium text-slate-500">Name</th>
-              <th className="px-4 py-3 text-left font-medium text-slate-500">Email</th>
-              <th className="px-4 py-3 text-left font-medium text-slate-500">Degree / Major</th>
-              <th className="px-4 py-3 text-left font-medium text-slate-500">Submitted</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Email</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Degree / Major</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Submitted</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
@@ -55,7 +60,7 @@ export default async function AdminPage() {
             )}
             {students.map((student) => (
               <tr key={student.id} className="hover:bg-slate-50">
-                <td className="px-4 py-3 font-medium text-slate-900">
+                <td className="px-4 py-3 font-medium text-ink">
                   {student.firstName} {student.lastName}
                 </td>
                 <td className="px-4 py-3 text-slate-600">{student.email}</td>
@@ -70,7 +75,7 @@ export default async function AdminPage() {
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/${student.id}`}
-                    className="font-medium text-slate-700 hover:text-slate-900"
+                    className="font-medium text-accent hover:text-accent-hover"
                   >
                     View
                   </Link>

@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-ink: #020617;
+  --color-ink-soft: #0a0f1f;
+  --color-accent: #0a58eb;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-light: #e8effe;
+}
+
 body {
   font-family:
     ui-sans-serif,

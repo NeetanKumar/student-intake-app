@@ -19,9 +19,9 @@ export function StepperNav({ currentPath }: { currentPath: string }) {
               <span
                 className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
                   isActive
-                    ? "bg-slate-900 text-white"
+                    ? "bg-accent text-white"
                     : isComplete
-                      ? "bg-slate-700 text-white"
+                      ? "bg-ink text-white"
                       : "bg-slate-200 text-slate-500"
                 }`}
               >
@@ -29,7 +29,7 @@ export function StepperNav({ currentPath }: { currentPath: string }) {
               </span>
               <span
                 className={`hidden text-sm font-medium sm:inline ${
-                  isActive ? "text-slate-900" : "text-slate-500"
+                  isActive ? "text-ink" : "text-slate-500"
                 }`}
               >
                 {step.label}
@@ -37,7 +37,7 @@ export function StepperNav({ currentPath }: { currentPath: string }) {
             </div>
             {index < STEPS.length - 1 && (
               <div
-                className={`h-0.5 flex-1 ${isComplete ? "bg-slate-700" : "bg-slate-200"}`}
+                className={`h-0.5 flex-1 ${isComplete ? "bg-accent" : "bg-slate-200"}`}
               />
             )}
           </li>

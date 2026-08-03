@@ -44,13 +44,13 @@ export function MultiSelectChecklist({
         {suggestions.map((item) => (
           <label
             key={item}
-            className="flex items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+            className="flex items-center gap-2 rounded-none border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
           >
             <input
               type="checkbox"
               checked={value.includes(item)}
               onChange={() => toggle(item)}
-              className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
+              className="h-4 w-4 rounded border-slate-300 text-accent focus:ring-accent"
             />
             {item}
           </label>
@@ -62,7 +62,7 @@ export function MultiSelectChecklist({
           {customValues.map((item) => (
             <span
               key={item}
-              className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+              className="flex items-center gap-1.5 rounded-full bg-accent-light px-3 py-1 text-xs font-medium text-accent-hover"
             >
               {item}
               <button
@@ -90,12 +90,12 @@ export function MultiSelectChecklist({
             }
           }}
           placeholder={customPlaceholder}
-          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="w-full rounded-none border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
         />
         <button
           type="button"
           onClick={addCustom}
-          className="shrink-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="shrink-0 rounded-none border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
         >
           Add
         </button>
