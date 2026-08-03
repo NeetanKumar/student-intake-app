@@ -21,20 +21,12 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/intake/basic-info"
-            className="rounded-none bg-accent px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-hover"
-          >
-            Start intake form
-          </Link>
-          <Link
-            href="/admin"
-            className="rounded-none border border-white/20 bg-transparent px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-          >
-            View submissions (admin)
-          </Link>
-        </div>
+        <Link
+          href="/intake/basic-info"
+          className="rounded-none bg-accent px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-hover"
+        >
+          Start intake form
+        </Link>
       </div>
     </main>
   );
