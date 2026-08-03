@@ -16,9 +16,12 @@ Zod + react-hook-form · Tailwind CSS v4.
 docker compose up --build
 ```
 
-Builds the app image, starts Postgres, applies migrations automatically,
-and serves the app at [http://localhost:3000](http://localhost:3000). No
-local Node install needed.
+Builds the app image, starts Postgres, applies migrations, and seeds 4
+sample submissions on first run (skipped automatically if the database
+already has data — set `SEED_ON_START: "false"` in `docker-compose.yml`
+to disable). Serves the app at
+[http://localhost:3000](http://localhost:3000). No local Node install
+needed.
 
 ### Option B — Local dev
 

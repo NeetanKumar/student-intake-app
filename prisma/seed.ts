@@ -114,6 +114,12 @@ const submissions = [
 ];
 
 async function main() {
+  const existing = await prisma.student.count();
+  if (existing > 0) {
+    console.log(`Database already has ${existing} submission(s), skipping seed.`);
+    return;
+  }
+
   for (const submission of submissions) {
     await prisma.student.create({
       data: {

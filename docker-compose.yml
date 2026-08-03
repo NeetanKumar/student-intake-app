@@ -24,6 +24,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://intake:intake@postgres:5432/student_intake?schema=public
+      SEED_ON_START: "true"
     ports:
       - "3000:3000"
 
