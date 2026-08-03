@@ -16,5 +16,16 @@ services:
       timeout: 5s
       retries: 5
 
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://intake:intake@postgres:5432/student_intake?schema=public
+    ports:
+      - "3000:3000"
+
 volumes:
   pgdata:
