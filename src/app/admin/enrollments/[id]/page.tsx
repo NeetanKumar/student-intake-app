@@ -5,7 +5,7 @@ import { degreeLevelLabel, employmentTypeLabel, locationTypeLabel } from "@/lib/
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminDetailPage({
+export default async function EnrollmentDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -29,7 +29,7 @@ export default async function AdminDetailPage({
           {student.firstName} {student.lastName}
         </h1>
         <Link
-          href="/admin"
+          href="/admin/enrollments"
           className="rounded-none border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
         >
           Back to list

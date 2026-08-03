@@ -1,90 +1,55 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { degreeLevelLabel } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminPage() {
-  const students = await prisma.student.findMany({
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      createdAt: true,
-      academicInterest: { select: { degreeLevel: true, major: true } },
-    },
-  });
+export default async function AdminDashboardPage() {
+  const submissionCount = await prisma.student.count();
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10">
-      <div className="flex items-center justify-between">
-        <div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-            Admissions
-          </span>
-          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
-            Submitted Intakes
-          </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            {students.length} submission{students.length === 1 ? "" : "s"} on file.
-          </p>
-        </div>
-        <Link
-          href="/"
-          className="rounded-none border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
-        >
-          Back to home
-        </Link>
+      <div>
+        <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+          Admissions
+        </span>
+        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-ink">
+          Admin Dashboard
+        </h1>
+        <p className="mt-1 text-sm text-slate-600">
+          Manage and review incoming student intake submissions.
+        </p>
       </div>
 
-      <div className="overflow-x-auto rounded-none border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-slate-50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Name</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Email</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Degree / Major</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Submitted</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {students.length === 0 && (
-              <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
-                  No submissions yet.
-                </td>
-              </tr>
-            )}
-            {students.map((student) => (
-              <tr key={student.id} className="hover:bg-slate-50">
-                <td className="px-4 py-3 font-medium text-ink">
-                  {student.firstName} {student.lastName}
-                </td>
-                <td className="px-4 py-3 text-slate-600">{student.email}</td>
-                <td className="px-4 py-3 text-slate-600">
-                  {student.academicInterest
-                    ? `${degreeLevelLabel(student.academicInterest.degreeLevel)} · ${student.academicInterest.major}`
-                    : "—"}
-                </td>
-                <td className="px-4 py-3 text-slate-600">
-                  {new Date(student.createdAt).toLocaleString()}
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <Link
-                    href={`/admin/${student.id}`}
-                    className="font-medium text-accent hover:text-accent-hover"
-                  >
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Link
+        href="/admin/enrollments"
+        className="group flex items-center justify-between rounded-none border border-slate-200 bg-white p-6 shadow-sm transition hover:border-accent"
+      >
+        <div>
+          <h2 className="text-lg font-bold text-ink">Student Enrollments</h2>
+          <p className="mt-1 text-sm text-slate-600">
+            {submissionCount} submission{submissionCount === 1 ? "" : "s"} on file — view
+            the full list and drill into individual records.
+          </p>
+        </div>
+        <span className="flex shrink-0 items-center gap-1 text-sm font-semibold text-accent">
+          View list
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="h-4 w-4 transition group-hover:translate-x-0.5"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14M13 6l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </Link>
     </main>
   );
 }

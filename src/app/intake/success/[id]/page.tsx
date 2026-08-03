@@ -35,7 +35,7 @@ export default async function IntakeSuccessPage({
           Back to home
         </Link>
         <Link
-          href={`/admin/${id}`}
+          href={`/admin/enrollments/${id}`}
           className="rounded-none border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
         >
           View submission

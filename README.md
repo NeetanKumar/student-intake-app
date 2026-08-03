@@ -62,8 +62,9 @@ npx prisma studio
 - On submit, `POST /api/intakes` creates the `Student` row plus its
   `AcademicInterest`/`WorkPreference` (and their child rows) in one nested
   Prisma `create` call.
-- `/admin` and `/admin/[id]` read directly from Prisma to list/display
-  submissions; the same data is available over the JSON API.
+- `/admin` is a small dashboard; `/admin/enrollments` and
+  `/admin/enrollments/[id]` read directly from Prisma to list/display
+  submissions. The same data is available over the JSON API.
 
 ## Database schema
 
